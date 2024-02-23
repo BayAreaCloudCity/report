@@ -1,0 +1,126 @@
+\documentclass[12pt]{article}
+
+\usepackage{setspace}
+\usepackage[margin=1in]{geometry}
+\usepackage[authordate,backend=biber,natbib,sortcites=true]{biblatex-chicago}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{frcursive}
+\usepackage{soul}
+\addbibresource{report.bib}
+
+
+
+
+\title{Cloud City Capstone Project Report \\ Draft 1: Literature Review}
+\author{Nozomu Kitamura$^1$ \and Qingyang Hu$^2$ \and Jhan-Shuo (Jeff) Liu$^2$}
+\date{%
+    $^1$Civil and Environmental Engineering, UC Berkeley\\%
+    $^2$Electrical Engineering \& Computer Science, UC Berkeley\\[1ex]%
+    {\it \today}
+}
+\begin{document}
+\newcommand{\integrity}[2]{[\textcolor{Sepia}{Author:{\tt#1}}; \textcolor{BlueViolet}{Editor:{\tt#2}}]}
+
+\maketitle
+\tableofcontents
+
+
+\newpage
+\doublespacing
+\section{Introduction}
+\subsection{Problem}
+\integrity{NK}{QH} Traffic congestion is a significant obstacle in achieving smart cities. In the United States, the urban commuters spends about 54 hours on average in traffic congestion annually, costing the economy about \$179 billion \autocite{brian2019jams}. Addressing this issue is crucial, and an effective solution involves predicting traffic flows to control and optimize transportation systems \autocite{zhu2022research}. Therefore, predicting and optimizing traffic flows is essential for realizing a smart city. To realize a smart city, integrating and analyzing a variety of data is necessary, a process that is complex and time-consuming. Specifically, data must be collected from various sources, pre-processed through cleaning and standardization, converted into a format suitable for analysis, and stored securely while being easily accessible. In short, optimizing traffic requires decision-makers to undertake complex, time-consuming tasks requiring specialized knowledge before analyzing and deriving practical solutions.
+
+\subsection{Background}
+\integrity{NK}{QH} The IoT market in the U.S. is expected to increase from approximately \$118.2 billion in 2023 to about \$553.9 billion in 2030, at a compound annual growth rate (CAGR) of 24.7\%. This forecast underscores the rapid expansion of the IoT market \autocite{fortune2020us}. Additionally, cloud computing has facilitated the processing and analysis of large data volumes. Moreover, digital twin technology has enabled the modeling of various factors affecting traffic flow and simulations aimed at optimizing traffic and infrastructure. Consequently, the growth of the IoT market, alongside advancements in cloud computing and digital twins, has spurred a high demand for data collection and analysis from various sources and the optimization of operations.
+
+\subsection{Project Goal}
+\integrity{NK}{QH} To realize smart cities, our goal is to develop an application that simplifies complex data integration and efficiently develops analysis systems. This will be accomplished by processing real-time data from various sources efficiently, utilizing cloud computing and digital twins to model traffic flow, and integrating these with UI/UX tools that support data-driven decision-making.
+
+\section{Existing Works}
+\integrity{NK}{QH} This section examines existing studies pertinent to our project, identifying their differences and the insights they offer. It also details how these insights enhance our proposed solution. This literature review focuses on leveraging relevant research findings to improve our smart city applications.
+ 
+\subsection{Traffic Congestion Factors}
+\integrity{NK}{QH} The Cambridge \citet{systematics2005traffic} report outlines current conditions, trends, and countermeasures for traffic congestion in the United States, focusing on traffic flow affecting factors. It details seven major causes, including physical bottlenecks, traffic accidents, construction zones, weather, traffic control devices, special events, and normal traffic volume fluctuations. These factors, while sharing similarities and differences with other studies in traffic flow prediction using machine learning, provide essential information for achieving highly accurate forecasts.
+
+\subsection{Traffic Flow Prediction Models and Road Segmentation}
+
+\integrity{NK}{QH} \citet{garrett2020integrated} developed a machine learning-based traffic forecasting package that considers weather, construction sites, accidents, and special events. They integrate actual traffic data with external factors and apply decision trees and Markov models to offer a practical tool for predicting traffic congestion. Meanwhile, \citet{zafar2020traffic} discuss the accuracy of machine learning methods such as Random Forest, KNN, XGBoost, and GradientBoost, with the highest accuracy reaching 92\%, indicating potential for accuracy improvement. Additionally, \citet{park2011real} present a neural network-based speed prediction algorithm that uses current traffic information. These studies demonstrate the effectiveness of combining real-time data with external factors and applying various machine learning methods in traffic flow prediction, providing valuable insights for traffic management model building.
+
+\integrity{NK}{QH} In forecasting traffic flows, it is not realistic to uniformly forecast the entire roadway since, in reality, only a portion of the roadway is often very congested. Therefore, the guidelines in the Highway Capacity Manual by \citet{bob2023freeway} provide a method for forecasting traffic flow that does not uniformly forecast the entire roadway but analyzes specific segments separately, such as merging points, turnouts, lane changes, and sections with different speed limits. This approach makes our project more realistic, detailed, and accurate traffic flow forecasts.
+
+\subsection{Streaming Data}
+\integrity{JL}{NK} Creating a function to periodically collect data and pass it as streaming data to our pipeline is straightforward. However, \citet{damji2020learning} highlight the challenge of streaming data and proposes a solution. The issue is that data or messages might not be delivered to our system on time due to network connectivity or the iterative characteristics of data collection. He suggests defining a time window to discard any out-of-order data delayed beyond this window. This consideration is crucial when replaying data for simulation, addressing delay messages, and managing these situations in our online streaming prediction.
+
+
+
+\subsection{Low-Code Platforms}
+\integrity{QH}{JL} Low-code platforms have gained popularity, enabling individuals with minimal coding expertise to develop applications swiftly. \citet{sahay2020supporting} provide a comprehensive comparison of existing low-code platforms, such as Google App Maker and Salesforce. They observed that these platforms share similar design models but lack built-in AI support, advanced business insights reporting, and support for event-driven applications.
+
+\subsection{Anaximander Framework}
+
+\integrity{QH}{NK} The Anaximander framework supports event-driven applications through the use of low-code technologies \autocite{jd2021anaximander}. It models data sources with Python code, enabling developers to manage them as traditional Python objects through its object-oriented design. This facilitates expressive programming and allows for quick testing of new ideas and accelerated innovation, although it has not yet been applied in real-world applications.
+
+\subsection{Event-Driven Applications}
+\integrity{QH}{NK} For smart city applications, updates often come in the form of events from diverse sources. Hence, event-driven development is a popular choice for these applications. \citet{hinze2009event} suggest that traffic monitoring, which involves gathering information from numerous sensors, could utilize this method. Although no realized applications were provided, a publisher/subscriber system for event communication and data mining for traffic pattern insights was recommended.
+
+\subsection{Digital Twins for Smart Cities}
+\integrity{JL}{NK} Digital Twins replicate physical world signals or data in the digital realm. For transportation, analyzing speed data from freeway sensors allows transportation departments to make more informed and timely decisions \autocite{hu2021digital}. Thus, the digital twins concept involves collecting ample real-world data, extracting useful information, and making data-driven decisions across various fields.
+
+\subsection{Dashboard for Data-driven Decision Making}
+\integrity{JL}{QH} Smart city applications assist users in making data-driven decisions. Therefore, a dashboard that visualizes and summarizes data can be beneficial. \citet{tempelmeier2020ta} propose the Traffic Analytics Dashboard (TA-Dash), an interactive dashboard for visualizing urban traffic patterns over time and space. The usefulness of TA-Dash is demonstrated through showcased by illustrating how it can analyze, predict, and visually represent the effects of special events on traffic. This insight underscores the need for a dashboard to visualize model predictions, enabling even non-expert users to understand the results.
+
+\section{Our Approach}
+\integrity{NK}{QH} This project integrates the Anaximander Framework with the research findings discussed in the literature review to create practical smart city applications offering unique insights. This section outlines three aspects: streamlined data processing, dashboard utilization, and traffic flow prediction.
+\subsection{Anaximander Framework: Streamlined Data Processing}
+\integrity{NK}{QH} The Anaximander Framework enables low-code data ingestion, model execution, and cloud implementation, allowing quick testing of new ideas and accelerating innovation. This approach also empowers non-technical users to contribute to smart city solution development.
+\subsection{Dashboard: Data-driven Decision Making}
+\integrity{NK}{QH} An intuitive dashboard enables decision-makers to comprehend complex data and make informed decisions swiftly. Our project uses machine learning to predict traffic flow 10 minutes into the future, displaying current and predicted traffic flow, actual traffic data, and forecast error in a user-friendly manner. This allows decision-makers to quickly grasp the data and make reliable decisions.
+\subsection{Machine Learning: Traffic Flow Predictions}
+\integrity{NK}{QH} We are developing traffic flow prediction models using machine learning and deep learning, based on real-time traffic data and factors such as weather, accidents, events, day of the week, and time of day. To enhance traffic flow forecasting accuracy, we segment roads into smaller sections and develop models for each segment.
+\section{Conclusion}
+\integrity{NK}{JL} Employing the Anaximander Framework's low-code approach for an efficient data transformation pipeline in traffic flow forecasting will significantly advance smart city application development. The traffic flow forecasting models and intuitive dashboards developed in this project will effectively support traffic management and planning decision-making, contributing to smart city development.
+
+\newpage
+\printbibliography[heading=bibintoc, title={References}]
+
+
+\newpage
+\appendix
+\singlespacing
+\section{Author/Editor Legend}
+\begin{itemize}
+    \item {\tt QH} -- Qingyang Hu
+    \item {\tt JL} -- Jhan-Shuo (Jeff) Liu
+    \item {\tt NK} -- Nozomu Kitamura
+\end{itemize}
+\section{Academic Integrity Pledge}
+We affirm that we are the sole authors of this report and we give due credit (i.e., use correct citations) to all used sources.
+
+
+\noindent\begin{tabular}{@{}p{2.5in}p{2.5in}@{}}
+  \\[1\bigskipamount]
+  {\cursive \Large Nozomu Kitamura} & {\cursive \Large 2/21/2024}\\
+  \hrulefill & \hrulefill \\
+  Author: Nozomu Kitamura & Date \\[2\bigskipamount]
+   {\cursive \Large Qingyang Hu} & {\cursive \Large 2/21/2024}\\
+  \hrulefill & \hrulefill \\
+  Author: Qingyang Hu & Date \\[2\bigskipamount]
+  {\cursive \Large Jhan-Shuo (Jeff) Liu} & {\cursive \Large 2/21/2024}\\
+  \hrulefill & \hrulefill \\
+  Author: Jhan-Shuo (Jeff) Liu & Date \\
+\end{tabular}
+
+\newpage
+\doublespacing
+\section{Turnitin Reflection}
+The initial Turnitin score was 15\%\footnote{Note: We were not able to generate the similarity report using our PDF. However, a workaround by selecting and copying all texts into a TXT file has successfully allowed us to generate the similarity score. All scores here refer to the text version, which contains exactly all the texts we have.}. We went through every match to ensure that it was superfluous.
+
+The Reference Section contributes the most to the similarity score, approximately 9\%. However, this was due to the title or author of the paper or webpage being cited. We have examined the sources of these similarities, and they are all due to other people citing the same sources, which is unavoidable. 
+
+Next, our Academic Integrity Pledge contributes to 2\% of the similarity score. This is due to the use of templates given by the instructor, which we were instructed to do. Similarly, the Table of Contents also contributes to 2\% of the similarity score, with the similarity stemming from the section numbers.
+
+Minor matches in Section 1.2 ``Background'', Section 2.1 ``Traffic Congestion Factors'', and Section 2.8 ``Dashboard for Data-Driven Decision Making'' contribute to another 2\% of the similarity score. However, they were related to figures such as dollar, unit, and time, or terminologies like ``compound annual growth rate (CAGR)'' and ``traffic control devices,'' for which we have already cited the sources accordingly.
+
+Finally, minor matches in Section 3.3 ``Machine Learning: Traffic Flow Prediction'' contribute to the last 2\% of the similarity score. However, the matches are common sense, which are common strategies used in Machine Learning models. This was also discussed in the paper, but our idea was not derived from them.
+\end{document}
