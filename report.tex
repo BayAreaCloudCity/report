@@ -7,6 +7,16 @@
 \usepackage{frcursive}
 \usepackage{soul}
 \usepackage{draftwatermark}
+\usepackage{hyperref}
+\newcommand{\wordcount}[1]{
+\immediate\write18{texcount -inc -sum -0 -template={SUM} #1.tex > count.txt}
+\bigskip\noindent{\bf \input{count.txt}words}}
+\newcommand{\integrity}[2]{[\textcolor{Sepia}{Author:{\tt#1}}; \textcolor{BlueViolet}{Editor:{\tt#2}}]}
+\usepackage{amsmath}
+\usepackage{svg}
+\usepackage{minted}
+\usepackage{pdflscape}
+
 \SetWatermarkScale{4}
 \addbibresource{report.bib}
 
@@ -20,9 +30,8 @@
     $^2$Electrical Engineering \& Computer Science, UC Berkeley\\[1ex]%
     \bigskip {\it \today}
 }
-\usepackage{amsmath}
 \begin{document}
-\newcommand{\integrity}[2]{[\textcolor{Sepia}{Author:{\tt#1}}; \textcolor{BlueViolet}{Editor:{\tt#2}}]}
+
 
 \maketitle
 \newpage
@@ -31,129 +40,10 @@
 
 \newpage
 \doublespacing
-\chapter{Executive Summary}
-\chapter{Business Analysis}
 
-\section{Introduction}
-\integrity{NK}{JL} The IoT market in the U.S. is expected to increase from approximately \$118.2 billion in 2023 to about \$553.9 billion in 2030, at a compound annual growth rate (CAGR) of 24.7\%. This forecast underscores the rapid expansion of the IoT market \autocite{fortune2020us}. As the IoT market evolves, IoT networks now facilitate digital twins that enhance the monitoring and forecasting of physical operations across multiple sectors. Creating digital twins requires a profound understanding of complex data engineering, software engineering, and cloud infrastructure. This project proposes a new methodology to develop a digital twin of full-stack applications using a low-code framework, requiring no specialized knowledge. Specifically, we developed a real-time traffic forecasting and analysis model for a designated segment of the I-880 freeway. We integrated data from speed sensors, weather conditions, and traffic operation events within a cloud environment to train a predictive model. This model was then utilized to forecast traffic flow 10 minutes into the future based on real-time data, with the predictions displayed on an intuitive dashboard. Moreover, this project explores the potential of low-code approaches by reverse-engineering the developed models and incorporating the ensuing reference architecture and domain-specific language. This process aims to streamline the development of digital twin applications, making them accessible even to users with limited data engineering and software engineering expertise.
-
-\section{Existing Works}
-
-\subsection{Traffic Congestion Factors}
-\integrity{NK}{JL} The Cambridge \citet{systematics2005traffic} report outlines current conditions, trends, and countermeasures for traffic congestion in the United States, focusing on traffic flow-affecting factors. It details seven significant causes, including physical bottlenecks, traffic accidents, construction zones, weather, traffic control devices, special events, and normal traffic volume fluctuations. These factors have similarities and differences with other machine learning-based traffic flow forecasting research. Appropriately considering these key factors affecting traffic flow when forecasting traffic flow using machine learning can provide valuable insights to achieve more practical forecasts grounded in reality.
-
-\subsection{Traffic Flow Prediction Models}
-\integrity{NK}{JL} \citet{garrett2020integrated} developed a machine learning-based traffic forecasting package that considers weather, construction sites, accidents, and special events. They integrate actual traffic data with external factors and apply decision trees and Markov models to offer a practical tool for predicting traffic congestion. Meanwhile, \citet{zafar2020traffic} discusses the accuracy of machine learning methods such as Random Forest, KNN, XGBoost, and GradientBoost, with the highest accuracy reaching 92\%, indicating the potential for improvement. Additionally, \citet{park2011real} presents a neural network-based speed prediction algorithm that uses current traffic information. These studies demonstrate the effectiveness of combining real-time data with external factors and applying machine learning and deep learning techniques to traffic flow forecasting, providing essential insights for building more realistic traffic management models.
-
-\subsection{Road Segmentation}
-\integrity{NK}{JL} In forecasting traffic flows, it is not realistic to uniformly forecast the entire roadway since, in reality, only a portion of the roadway is often very congested. Therefore, the guidelines in the Highway Capacity Manual by \citet{bob2023freeway} provide a method for forecasting traffic flow that does not uniformly forecast the entire roadway but analyzes specific segments separately, such as merging points, turnouts, lane numbers, and sections with different speed limits. This approach makes our project more realistic and detailed traffic flow forecasts.
-
-\subsection{Streaming Data}
-\integrity{JL}{NK} Creating a function to periodically collect data and pass it as streaming data to our pipeline is straightforward. However, \citet{damji2020learning} highlight the challenge of streaming data and proposes a solution. The issue is that data or messages might not be delivered to our system on time due to network connectivity or the iterative characteristics of data collection. He suggests defining a time window to discard any out-of-order data delayed beyond this window. This consideration is crucial when replaying data for simulation, addressing delay messages, and managing these situations in our online streaming prediction.
-
-\subsection{Low-Code Platforms}
-\integrity{QH}{JL} Low-code platforms have gained popularity, enabling individuals with minimal coding expertise to develop applications swiftly. \citet{sahay2020supporting} provide a comprehensive comparison of existing low-code platforms, such as Google App Maker and Salesforce. They observed that these platforms share similar design models but lack built-in AI support, advanced business insights reporting, and support for event-driven applications.
-
-\subsection{Anaximander Framework}
-\integrity{NK}{JL} The Anaximander framework is a Python library that combines object-oriented programming with data science tools. The framework is designed to provide concise declarations of data, metadata, and transformation pipelines. Anaximander also automates the setup, configuration, and management of infrastructure, software, systems, and the resources and services required for data access in a cloud environment. This allows developers to focus on business logic and data science-related issues. In addition, the Anaximander framework supports event-driven applications through the use of low-code technologies \autocite{jd2021anaximander}. It models data sources with Python code, enabling developers to manage them as traditional Python objects through its object-oriented design. This facilitates expressive programming and allows for quick testing of new ideas and accelerated innovation, although it has not yet been applied in real-world applications.
-
-\subsection{Event-Driven Applications}
-\integrity{QH}{JL} For smart city applications, updates often come in the form of events from diverse sources. Hence, event-driven development is a popular choice for these applications. \citet{hinze2009event} suggest that traffic monitoring, which involves gathering information from numerous sensors, could utilize this method. Although no realized applications were provided, a publisher/subscriber system for event communication and data mining for traffic pattern insights was recommended.
-
-\subsection{Digital Twins for Smart Cities}
-\integrity{NK}{JL} Digital Twins replicate physical world signals or data in the digital realm. For transportation, analyzing speed data from freeway sensors allows transportation departments to make more informed and timely decisions \autocite{hu2021digital}. Thus, the digital twins concept involves collecting ample real-world data, extracting useful information, and making data-driven decisions across various fields.
-
-\subsection{Dashboard for Data-driven Decision Making}
-\integrity{JL}{NK} Smart city applications assist users in making data-driven decisions. Therefore, a dashboard that visualizes and summarizes data can be beneficial. \citet{tempelmeier2020ta} propose the Traffic Analytics Dashboard (TA-Dash), an interactive dashboard for visualizing urban traffic patterns over time and space. The usefulness of TA-Dash is demonstrated through showcased by illustrating how it can analyze, predict, and visually represent the effects of special events on traffic. This insight underscores the need for a dashboard to visualize model predictions on geometric maps and line plots, enabling even non-expert users to understand the results.
-
-\chapter{Technical Details}
-
-\section{Methodology}
-
-\subsection{Dataset}
-\integrity{JL}{QH}Based on our literature review 2.2.1, we identified weather, traffic events, and traffic speed as key factors for predicting traffic flow. Thus, we are collecting datasets from the following sources:
-\begin{itemize}
-    \item Traffic events: 511.org
-    \item Weather: OpenWeather
-    \item Traffic speed: Caltrans Performance Measurement System (PeMS)
-\end{itemize}
-
-\subsection{Traffic Modeling}
-\integrity{NK}{QH}
-At the start of the project, we gathered data from various sources, merged it, and assigned a section ID to each segment of I-880 for which predictions were to be made. This consolidated dataset was then subjected to exploratory data analysis (EDA) to assess its structure, identify missing values, and detect outliers. We performed data cleaning by eliminating irrelevant columns and data points through this process. The analysis used data on current traffic speeds, weather conditions, incidents, calendar dates, and times. We applied one-hot encoding to the categorical variables, such as weather conditions, traffic incidents, calendar dates, and times, and standardized the numerical data, such as current traffic speeds.
-In our feature engineering phase, we identified the most critical severity for events that occurred within a 60-minute window before the forecast time and within a 10-mile radius of the midpoint of the predicted section. We then introduced a new feature called the event severity score, which was calculated using the following formula:
-
-\begin{equation}
-    \text{Severity Score} = \text{severity} \times \left( e^{-\text{time}} + e^{-\text{distance}} \right)
-\end{equation}
-
-For weather and traffic event data, where there were many types, and the individual impact was unclear, related categories were consolidated. Additionally, Principal Component Analysis (PCA) was applied to the entire dataset to reduce the dimensionality of the features. These preprocessing techniques aimed to enhance the efficiency of model training and the accuracy of forecasts.
-In constructing the traffic flow forecasting model, linear regression, random forest, LightGBM, and a neural network MLP (Multilayer Perceptron) were compared. The model with the lowest MSE was chosen as the final model.
-
-\subsection{Cloud Computing}
-\integrity{QH}{??}We have employed Google Cloud Platform, specifically PaaS (Platform as a Service) and FaaS (Function as a Service), for implementing and deploying our project. This approach helps reduce running and maintenance costs. We will use this implementation as our reference architecture for our low-code approach.
-
-\subsection{Dashboard}
-\integrity{JL}{QH} To enhance the visualization of predictive traffic flow and streamline development efforts, we have chosen Grafana, a robust visualization tool, to present our model predictions. Grafana offers a wide range of plot types, including time series, bar charts, heatmaps, and geomaps, making it a versatile choice. Additionally, its support for various plugins allows seamless integration with different databases. In our implementation, we incorporated the BigQuery plugin to facilitate connection with our dataset, empowering Grafana to generate insightful visualizations.
-
-The first section of our dashboard focuses on time series data for individual segments. This includes the actual observed speeds sourced from PeMS data alongside our predictive values. To enrich the analysis, we've integrated event scores onto these graphs. These visualizations enable us not only to compare predicted and actual speeds but also to examine any correlation between event scores and actual speed fluctuations.
-
-The second segment of the dashboard is dedicated to showcasing traffic congestion levels on a geographical map. This provides users with a comprehensive view of congestion across different segments at specific timestamps. Each segment is represented by an arrow on the map, with colors indicating the severity of congestion. As congestion escalates, the color of the arrow transitions from green to orange, red, and eventually purple, providing a clear indication of worsening traffic conditions.
- 
-
-\subsection{Low-code approach}
-\integrity{JL}{??}We reverse engineered our implementation to turn our product into a reference architecture and DSL. Our DSL is designed to overcome the challenges posed by traditional approaches like SQL, which face issues with stateful transformations, late/out-of-order data, and cost-correctness-latency trade-offs.
-
-\section{Results}
-\subsection{Traffic Modeling: Accuracy}
-The results of the comparative analysis using linear regression, random forest, LightGBM, and MLP neural networks, which are utilized in other studies mentioned in the literature review, revealed that the MLP model exhibited superior performance, as indicated in the table ~\ref{table:mse_comparison_transposed}. Model training and accuracy evaluation were conducted using five-fold cross-validation and Mean Squared Error (MSE), and hyperparameter optimization was carried out using random search.
-The MLP model significantly surpassed the simple linear regression benchmark, reducing the MSE by approximately 10\%, thus offering more realistic predictions.
-
-\begin{table}[ht]
-\centering
-\begin{tabular}{|l|c|c|c|c|}
-\hline
- & Linear Regression & Random Forest & LightGBM & MLP \\ \hline
-MSE & 2.68 & 2.62 & 2.51 & 2.47 \\
-\hline
-\end{tabular}
-\caption{Comparison of MSE across different models}
-\label{table:mse_comparison_transposed}
-\end{table}
-
-
-
-\subsection{Cloud Computing: streaming; low maintenance}
-\integrity{OH}{??}Our reference architecture on Google Cloud Platform requires minimal maintenance once deployed, thanks to Google Cloud's managed services. Additionally, by leveraging Google Cloud’s PubSub and Dataflow system, we have successfully built a streaming data pipeline. This means our output can be updated based on real-time data rather than relying solely on downloaded data.
-
-\subsection{Dashboard: Visualization}
-\integrity{JL}{OH}In examining the time series panel, two noteworthy observations emerge. Firstly, our predictions consistently lag behind the actual speed. This discrepancy arises because our model forecasts the speed 10 minutes ahead based mostly on the current speed, essentially employing a baseline approach. This allows us to assess the accuracy of our model in comparison to this baseline. Secondly, the event score appears disconnected from instances of speed drops. Potential explanations for this misalignment include inaccuracies in the formula used to calculate the event score or discrepancies in the event data itself. Upon investigation, we discovered instances where event data from 511.org may be sourced from alternative channels, resulting in multiple events sharing identical creation times. This suggests a potential need for refining the event data collection process to ensure accuracy. Moreover, even when creation times are intended to be accurate, delays between the occurrence of an event and its reporting may still impact the data reliability.
-
-Turning to the geomap panel, a notable disparity in congestion levels between peak traffic hours and midnight is evident. Users have the flexibility to adjust the time settings to observe distinct patterns. The accompanying figure illustrates the insights gleaned from our geomap panel, highlighting the variance in congestion levels across different timeframes.
-
-
-\subsection{Reference Architecture} 
-\integrity{OH}{??}We have defined a reference architecture, represented as a diagram, for similar IoT projects to be implemented on a Cloud environment with our low-code approach below.
-
-\subsection{Low-code: DSL}
-\integrity{JL}{OH}Leveraging Anaximander's framework and adhering to our design principles, we've reimagined our data collection function into DSL as a demonstration of our approach. As illustrated in the figure below, the code is crafted with intuitive intent, minimizing the need for excessive commenting. This example showcases the function's capability to retrieve data from a specified link and subsequently store it in the database according to a predefined schema. Additionally, the function is scheduled to execute every 5 minutes.
-
-This example serves as evidence of the practicality of a low-code framework. If users can easily write code of this nature, the framework could seamlessly translate it into a reference architecture and generate corresponding components within a cloud environment. We envision this level of abstraction as accessible for individuals with a basic coding proficiency but lacking extensive software and data engineering backgrounds, enabling them to develop data-intensive applications.
-
-Further refinement and expansion of our project's technical aspects are slated for future implementation.
-
-
-\section{Future Work}
-\subsection{Low-code Framework}
-
-\integrity{QH}{??} While our project has proposed a viable method for implementing a low-code framework through our Domain-Specific Language (DSL) and reference architecture, the actual development within Alaxaminder--the low-code framework we are developing--remains a work in progress. To fully realize the potential of our work for Alaxaminder, we will need to establish a transformation process from our DSL to executable code. Additionally, it will be necessary to interconnect different components using code, and develop tools that enable users to easily manage them, to ensure compatibility with our reference architecture and fulfill our project's objectives.
-
-\subsection{Model Improvements}
-\integrity{NK}{OH} Future efforts will focus on enhancing and refining feature engineering and selection processes and exploring suitable deep learning architectures for time series forecasting, such as Recurrent Neural Networks (RNNs). These improvements will be implemented incrementally in stages to enhance the accuracy and reliability of our forecasting models.
-
-\subsection{Continuous Training Using Streaming Data}
-
-\integrity{QH}{??} Continuous improvement of models is another crucial aspect to consider for many business purposes, due to the constantly changing trends in users' behaviors and needs. To incorporate this concept, our reference architecture will need updates to include components that allow for such continuous improvements, whether locally or in the cloud. This could involve, for example, the addition of a model evaluation component and a model store. Additional logic may also be required, such as the continuous evaluation of model performance, complemented by dashboards that visualize relevant error metrics. Moreover, our Domain-Specific Language (DSL) would need updates to simplify processes for users. For instance, within our DSL, users could specify the frequency and dataset size necessary for model training, eliminating the need for writing complex scheduler logics.
+\include{report_executive_summary}
+\include{report_section1}
+\include{report_section2}
 
 
 \newpage
@@ -161,41 +51,5 @@ Further refinement and expansion of our project's technical aspects are slated f
 
 
 \newpage
-\chapter{Appendix}
-\singlespacing
-\section{Author/Editor Legend}
-\begin{itemize}
-    \item {\tt QH} -- Qingyang Hu
-    \item {\tt JL} -- Jhan-Shuo (Jeff) Liu
-    \item {\tt NK} -- Nozomu Kitamura
-\end{itemize}
-\section{Academic Integrity Pledge}
-We affirm that we are the sole authors of this report and we give due credit (i.e., use correct citations) to all used sources.
-
-
-\noindent\begin{tabular}{@{}p{2.5in}p{2.5in}@{}}
-  \\[1\bigskipamount]
-  {\cursive \Large Nozomu Kitamura} & {\cursive \Large 4/9/2024}\\
-  \hrulefill & \hrulefill \\
-  Author: Nozomu Kitamura & Date \\[2\bigskipamount]
-   {\cursive \Large Qingyang Hu} & {\cursive \Large 4/9/2024}\\
-  \hrulefill & \hrulefill \\
-  Author: Qingyang Hu & Date \\[2\bigskipamount]
-  {\cursive \Large Jhan-Shuo (Jeff) Liu} & {\cursive \Large 4/9/2024}\\
-  \hrulefill & \hrulefill \\
-  Author: Jhan-Shuo (Jeff) Liu & Date \\
-\end{tabular}
-
-\newpage
-\doublespacing
-\section{Turnitin Reflection}
-The initial Turnitin score was 15\%\footnote{Note: We were not able to generate the similarity report using our PDF. However, a workaround by selecting and copying all texts into a TXT file has successfully allowed us to generate the similarity score. All scores here refer to the text version, which contains exactly all the texts we have.}. We went through every match to ensure that it was superfluous.
-
-The Reference Section contributes the most to the similarity score, approximately 9\%. However, this was due to the title or author of the paper or webpage being cited. We have examined the sources of these similarities, and they are all due to other people citing the same sources, which is unavoidable. 
-
-Next, our Academic Integrity Pledge contributes to 2\% of the similarity score. This is due to the use of templates given by the instructor, which we were instructed to do. Similarly, the Table of Contents also contributes to 2\% of the similarity score, with the similarity stemming from the section numbers.
-
-Minor matches in Section 1.2 ``Background'', Section 2.1 ``Traffic Congestion Factors'', and Section 2.8 ``Dashboard for Data-Driven Decision Making'' contribute to another 2\% of the similarity score. However, they were related to figures such as dollar, unit, and time, or terminologies like ``compound annual growth rate (CAGR)'' and ``traffic control devices,'' for which we have already cited the sources accordingly.
-
-Finally, minor matches in Section 3.3 ``Machine Learning: Traffic Flow Prediction'' contribute to the last 2\% of the similarity score. However, the matches are common sense, which are common strategies used in Machine Learning models. This was also discussed in the paper, but our idea was not derived from them.
+\include{report_academic_integrity}
 \end{document}
