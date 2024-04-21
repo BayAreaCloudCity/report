@@ -1,23 +1,21 @@
-\documentclass{report}
+\documentclass[twocolumn]{report}
 
-\usepackage{setspace}
-\usepackage[margin=1in]{geometry}
+% \usepackage{setspace}
 \usepackage[authordate,backend=biber,natbib,sortcites=true]{biblatex-chicago}
-\usepackage[dvipsnames]{xcolor}
-\usepackage{frcursive}
-\usepackage{soul}
-\usepackage{draftwatermark}
+% \usepackage[dvipsnames]{xcolor}
+% \usepackage{frcursive}
+% \usepackage{soul}
 \usepackage{hyperref}
-\newcommand{\wordcount}[1]{
-\immediate\write18{texcount -inc -sum -0 -template={SUM} #1.tex > count.txt}
-\bigskip\noindent{\bf \input{count.txt}words}}
-\newcommand{\integrity}[2]{[\textcolor{Sepia}{Author:{\tt#1}}; \textcolor{BlueViolet}{Editor:{\tt#2}}]}
+% \newcommand{\wordcount}[1]{
+% \immediate\write18{texcount -inc -sum -0 -template={SUM} #1.tex > count.txt}
+% \bigskip\noindent{\bf \input{count.txt}words}}
+% \newcommand{\integrity}[2]{[\textcolor{Sepia}{Author:{\tt#1}}; \textcolor{BlueViolet}{Editor:{\tt#2}}]}
+\usepackage[pass]{geometry}
 \usepackage{amsmath}
 \usepackage{svg}
 \usepackage{minted}
-\usepackage{pdflscape}
-
-\SetWatermarkScale{4}
+\usepackage{rotating}
+\usepackage[percent]{overpic}
 \addbibresource{report.bib}
 
 
@@ -28,18 +26,45 @@
 \date{%
     $^1$Civil and Environmental Engineering, UC Berkeley\\%
     $^2$Electrical Engineering \& Computer Science, UC Berkeley\\[1ex]%
-    \bigskip {\it \today}
 }
 \begin{document}
 
 
-\maketitle
+\begin{titlepage}
+	\centering
+    {\scshape\Large Coleman Fung Institute for Engineering Leadership \\ Capstone Project Report - Spring 2024\par}
+    \vfill
+    
+	%%%% PROJECT TITLE
+	{\huge\bf Exploring Low-Code Approaches to Digital Twins with Traffic Prediction for Smart City Applications\par}
+    \vspace{1cm}
+    
+    {\large {\it Project ID: 24}}
+	\vfill
+	
+	%%%% AUTHOR(S)
+	{\Large 
+    {\bf Nozomu Kitamura} \\ Civil and Environmental Engineering \\ \medskip 
+    {\bf Qingyang Hu}  \\ Electrical Engineering and Computer Sciences \\ 
+    \medskip 
+    {\bf Jhan-Shuo (Jeff) Liu} \\ Electrical Engineering and Computer Sciences\\}\par
+
+	\vfill
+	{\it Advised By} \\ \medskip
+	%%%% SUPERVISOR(S)
+	{\bf JD Margulici} \\ Novavia Solutions \\ \medskip
+    {\bf Gabriel Gomes} \\ Mechanical Engineering
+    
+
+
+	\vfill
+% Bottom of the page
+\end{titlepage}
 \newpage
 \tableofcontents
 
 
 \newpage
-\doublespacing
 
 \include{report_executive_summary}
 \include{report_section1}
@@ -49,7 +74,4 @@
 \newpage
 \printbibliography[heading=bibintoc, title={References}]
 
-
-\newpage
-\include{report_academic_integrity}
 \end{document}
