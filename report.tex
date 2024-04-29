@@ -1,11 +1,12 @@
 \documentclass[twocolumn]{report}
 
 % \usepackage{setspace}
-\usepackage[authordate,backend=biber,natbib,sortcites=true]{biblatex-chicago}
+\usepackage[numbers]{natbib}
 % \usepackage[dvipsnames]{xcolor}
 % \usepackage{frcursive}
 % \usepackage{soul}
 \usepackage{hyperref}
+\usepackage{caption}
 % \newcommand{\wordcount}[1]{
 % \immediate\write18{texcount -inc -sum -0 -template={SUM} #1.tex > count.txt}
 % \bigskip\noindent{\bf \input{count.txt}words}}
@@ -14,9 +15,8 @@
 \usepackage{amsmath}
 \usepackage{svg}
 \usepackage{minted}
-\usepackage{rotating}
 \usepackage[percent]{overpic}
-\addbibresource{report.bib}
+\renewcommand\bibname{References}
 
 
 
@@ -32,22 +32,22 @@
 
 \begin{titlepage}
 	\centering
-    {\scshape\Large Coleman Fung Institute for Engineering Leadership \\ Capstone Project Report - Spring 2024\par}
+    {\scshape\Large University of California, Berkeley \\ Coleman Fung Institute for Engineering Leadership \\ Capstone Project Report - Spring 2024\par}
     \vfill
     
 	%%%% PROJECT TITLE
 	{\huge\bf Exploring Low-Code Approaches to Digital Twins with Traffic Prediction for Smart City Applications\par}
-    \vspace{1cm}
+    \vspace{0.5cm}
     
     {\large {\it Project ID: 24}}
 	\vfill
 	
 	%%%% AUTHOR(S)
 	{\Large 
-    {\bf Nozomu Kitamura} \\ Civil and Environmental Engineering \\ \medskip 
-    {\bf Qingyang Hu}  \\ Electrical Engineering and Computer Sciences \\ 
+    {\bf Nozomu Kitamura$^*$} \\ Civil and Environmental Engineering \\ \medskip 
+    {\bf Qingyang Hu$^*$}  \\ Electrical Engineering and Computer Sciences \\ 
     \medskip 
-    {\bf Jhan-Shuo (Jeff) Liu} \\ Electrical Engineering and Computer Sciences\\}\par
+    {\bf Jhan-Shuo (Jeff) Liu$^*$} \\ Electrical Engineering and Computer Sciences\\}\par
 
 	\vfill
 	{\it Advised By} \\ \medskip
@@ -59,7 +59,16 @@
 
 	\vfill
 % Bottom of the page
+\def\thefootnote{*}\footnotetext{All authors contributed equally to this work.}\def\thefootnote{\arabic{footnote}}
 \end{titlepage}
+\newpage
+
+\begin{figure*}
+    \centering
+    \includegraphics[width=\linewidth]{img/illustration.pdf}
+    \caption*{{\bf Preface}: This illustration provides a high-level view of our low-code analysis for our predictive traffic analysis project on I-880.}
+\end{figure*}
+
 \newpage
 \tableofcontents
 
@@ -72,6 +81,7 @@
 
 
 \newpage
-\printbibliography[heading=bibintoc, title={References}]
-
+\addcontentsline{toc}{chapter}{References}
+\bibliographystyle{IEEEtranN}
+\bibliography{report}
 \end{document}
